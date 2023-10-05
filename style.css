@@ -1,0 +1,56 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+#navbar{
+background-color: black;
+width:100%;
+height: 10vh;
+}
+
+
+#container{
+background-color: red;
+width:100%;
+height: 100vh;
+display: flex;
+flex-direction: row;
+}
+
+
+.left{
+width:20%;
+background-color: blanchedalmond;
+}
+
+
+.right{
+width:80%;
+background-color: aquamarine;
+padding: 20px;
+}
+
+.first{
+    background-color:chartreuse; 
+    height: 10%;
+    margin: 10px;
+}
+
+.second{
+    background-color:rgb(56, 32, 129); 
+    height: 10%;
+    margin: 10px;
+}
+
+.third{
+    background-color:rgb(206, 102, 16); 
+    height: 10%;
+    margin: 10px;
+}
+
+.fourth{
+    background-color:rgb(31, 139, 164); 
+    height: 10%;
+    margin: 10px;
+}
