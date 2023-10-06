@@ -4,20 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scaler</title>
+
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="navbar"></div>
+    <div id="navbar">
+        <div class="nav-left">
+            <div class="imgg"></div>
+            <div class="text">Login| Sign Up</div>
+        </div>
+        <div class="nav-right">
+            <i class="fa-solid fa-crown crow"></i>
+            <i class="fa-sharp fa-solid fa-chart-simple"></i>
+            <i class="fa-solid fa-bell"></i>
+            <i class="fa-solid fa-gear"></i>
+        </div>
+    </div>
     <div id="container">
         <div class="left">
 
+            <div class="box"><i class="fa-solid fa-sun" style="color: rgb(107, 107, 205);"></i>Today</div>
+            <div class="box"><i class="fa-regular fa-calendar" style="color: rgb(196, 211, 145);"></i>Tommorow</div>
+            <div class="box"><i class="fa-solid fa-calendar-days" style="color: rgb(68, 104, 68);"></i>This Week</div>
+            <div class="box"><i class="fa-solid fa-shield-halved" style="color: rgb(146, 116, 82);"></i>Planned</div>
+            <div class="box"><i class="fa-solid fa-check" style="color: rgb(20, 170, 68);"></i>Completed</div>
+            <div class="box"><i class="fa-solid fa-list-check" style="color: rgb(51, 91, 101);"></i>Tasks</div>
         </div>
         <div class="right">
-            <div class="first">Today</div>
-            <div class="second"></div>
+            <div class="first"> Today</div>
+            <div class="second">
+                <div class="details">25 min <br> Estimated Time</div>
+                <div class="details">2 Task <br> To Be Completed</div>
+                <div class="details">0 min <br> Elapsed Time</div>
+                <div class="details">0 <br>Completed Tasks</div>
+            </div>
             <div class="third"></div>
             <div class="fourth"></div>
         </div>
     </div>
+    <script src="https://kit.fontawesome.com/8df4627fa1.js" crossorigin="anonymous"></script>
 </body>
 </html>
