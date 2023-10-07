@@ -4,7 +4,8 @@
     "version": "1.0",
     "description": "Open a webpage in a new tab",
     "permissions": [
-      "activeTab"
+      "activeTab",
+      "storage"
     ],
     "action": {
       "default_popup": "popup.html",
@@ -22,8 +23,9 @@
     "background": {
       "service_worker": "background.js"
     },
-    "permissions": [
-      "tabs"
-    ]
+     "permissions": [
+       "tabs",
+       "storage"
+     ]
   }
   
