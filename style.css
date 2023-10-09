@@ -140,3 +140,25 @@ input{
 .text1{
     font-size: 20px;
 }
+
+
+button{
+    padding: 5px;
+    background-color: red;
+    color: white;
+    border-radius: 9px;
+    outline: none;
+}
+
+
+.task-row{
+    background-color: #0c4b59;
+    color: white;
+    padding: 12px;
+    margin-bottom: 12px;
+}
+
+.cycles{
+    padding: 12px;
+    background-color: aquamarine;
+}

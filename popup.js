@@ -99,12 +99,24 @@ const renderTasks=()=>{
 const taskContainer=document.getElementById('tasks');
 const renderTask=(task)=>{
     const taskRow=document.createElement('div');
+    taskRow.classList.add('task-row');
+
+
     const text=document.createElement('span');
     text.innerText=task.text;
+    text.classList.add('pp1')
+
+
     const startBtn=document.createElement('button');
     startBtn.innerText="Start";
+    startBtn.classList.add('pp2')
+
+
     const cycle=document.createElement('span');
     cycle.innerText=task.completedCycle+'/'+task.pomodoroCycle;
+    cycle.classList.add('cycles')
+
+
     taskRow.appendChild(text);
     taskRow.appendChild(startBtn);
     taskRow.appendChild(cycle);
