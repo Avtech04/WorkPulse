@@ -5,7 +5,8 @@
     "description": "Open a webpage in a new tab",
     "permissions": [
       "activeTab",
-      "storage"
+      "storage",
+      "notifications"
     ],
     "action": {
       "default_popup": "popup.html",
@@ -25,7 +26,8 @@
     },
      "permissions": [
        "tabs",
-       "storage"
+       "storage",
+       "notifications"
      ]
   }
   
