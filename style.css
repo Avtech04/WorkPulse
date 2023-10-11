@@ -83,7 +83,7 @@ padding: 20px;
 .text{
     color: rgb(171, 19, 19);
     margin: 9px;
- 
+    font-size: 15px;
     /* padding: 2px 12px 10px 1px; */
 }
 
@@ -105,6 +105,7 @@ i{
 }
 
 .box{
+    font-size: 15px;
     padding: 12px;
     padding-left: 18px;
     background-color: #e5ece630;
@@ -159,6 +160,25 @@ button{
 }
 
 .cycles{
+    background-color: #3c9e7d;
+    border: 2px;
+    border-radius: 18px;
+    text-align: right;
+    padding: 8px;
+}
+
+.pp1{
+    font-size: 23px;
     padding: 12px;
-    background-color: aquamarine;
+    text-align: left;
+}
+
+.pp2{
+    text-align: right;
+    color: #49f47c;
+    background-color: blueviolet;
+    border: 2px;
+    padding: 8px;
+    margin: 0px 12px;
+    cursor: pointer;
 }
