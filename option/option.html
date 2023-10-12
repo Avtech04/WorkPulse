@@ -5,26 +5,66 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+
+    <style>
+        *{
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+
+        }
+
+        #save-btn{
+            border: 2px;
+    color: white;
+    background-color: blue;
+    padding: 11px;
+    border-radius: 12px;
+    margin: 30px;
+        }
+
+        .heading{
+            color: #a300ff;
+            text-transform: capitalize;
+            font-size: 40px;
+            margin: 20px;
+            padding: 30px;
+        }
+        .container{
+            width: 70%;
+            background-color: blanchedalmond;
+            text-align: center;
+            margin: auto;
+            margin-top: 20px;
+        }
+        .inputs{
+            margin: 20px;
+        }
+        input{
+            padding: 10px;
+        }
+    </style>
 </head>
 <body>
-    <div>Options for Pomodoro Cycle</div>
-    <div>
+    <div class="container">
+    <div class="heading">Options for Pomodoro Cycle</div>
+    <div class="inputs">
         <label>Focus Mode Time</label>
         <input type="text" placeholder="Time in Minutes" value="25" id="focusInput">
     </div>
-    <div>
+    <div class="inputs">
         <label>Short Break Time</label>
         <input type="text" placeholder="Time in Minutes" value="5" id="shortInput">
     </div>
-    <div>
+    <div class="inputs">
         <label>Long Break Time</label>
         <input type="text" placeholder="Time in Minutes" value="15" id="longInput">
     </div>
-    <div>
+    <div class="inputs">
         <label>Long Break After</label>
         <input type="text" placeholder="Time in Minutes" value="4" id="cycleInput">
     </div>
     <button id="save-btn">Save Changes</button>
+
+</div>
 <script src="./option.js"></script>
 </body>
 </html>

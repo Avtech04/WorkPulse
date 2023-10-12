@@ -23,10 +23,10 @@ function searchYouTubeVideos(query) {
             const videoThumbnail = item.snippet.thumbnails.medium.url;
 
             // Create a new video element and append it to the videos container.
-            const videoElement = `<div>
+            const videoElement = `<div class="video-box">
                                     <h2>${videoTitle}</h2>
                                     <a href="https://www.youtube.com/watch?v=${videoId}" target="_blank">
-                                        <img src="${videoThumbnail}" alt="${videoTitle}">
+                                        <img src="${videoThumbnail}" alt="${videoTitle}" class="imgg">
                                     </a>
                                    </div>`;
             videosContainer.append(videoElement);
