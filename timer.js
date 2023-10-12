@@ -2,6 +2,19 @@ var index = 0;
 var task;
 var state = "pomodoro";
 var pause = 1;
+var focuTime=25,shortTime=5,longTime=15,cycle=4;
+var countTimer = focuTime * 60;
+window.onload=async()=>{
+    await chrome.storage.local.get(["focusTime", "shortTime", "longTime","longTimeCycle"], (res) => {
+        focuTime=res.focusTime;
+        shortTime=res.shortTime;
+        longTime=res.longTime;
+        cycle=res.longTimeCycle;
+        countTimer=focuTime*60;
+        flipAllCards(countTimer);
+    })
+    
+}
 
 //retriving data of task
 const taskSpan = document.getElementById('task');
@@ -16,8 +29,7 @@ chrome.storage.local.get("remainingTask", (data) => {
 
 
 //countdown 
-var countTimer = 1 * 60;
-flipAllCards(countTimer);
+
 setInterval(() => {
     if (!pause) {
         countTimer = countTimer - 1;
@@ -32,7 +44,7 @@ setInterval(() => {
                 if (task.completedCycle == task.pomodoroCycle) {
                     taskCompleted();
                 }
-                if (task.completedCycle < 4) {
+                if (task.completedCycle < cycle) {
                     state = "shortBreak";
                     shortBreak();
                 } else {
@@ -48,7 +60,7 @@ setInterval(() => {
         }
 
     }
-    cycleSpan.innerText = task.completedCycle + '/' + task.pomodoroCycle;
+    
 }, 1000)
 
 
@@ -79,15 +91,15 @@ resetBtn.addEventListener('click', () => {
 
 //focusmode function
 const focusMode = () => {
-    flipAllCards(25 * 60);
-    countTimer = 25 * 60;
+    flipAllCards(focuTime * 60);
+    countTimer = focuTime* 60;
     startBtn.innerText = "Start";
 }
 
 //short Break function
 const shortBreak = () => {
-    flipAllCards(5 * 60);
-    countTimer = 5 * 60;
+    flipAllCards(shortTime* 60);
+    countTimer = shortTime * 60;
     startBtn.innerText = "Start";
     chrome.notifications.create(
         {
@@ -101,8 +113,8 @@ const shortBreak = () => {
 
 //long Break function
 const longBreak = () => {
-    flipAllCards(15 * 60);
-    countTimer = 15 * 60;
+    flipAllCards(longTime * 60);
+    countTimer = longTime * 60;
     startBtn.innerText = "Start";
     chrome.notifications.create(
         {
@@ -136,7 +148,7 @@ const taskCompleted = () => {
 
 
 //clock updation in HTML
-function flipAllCards(time) {
+async function  flipAllCards (time) {
 
     const seconds = time % 60
     const minutes = Math.floor(time / 60) % 60

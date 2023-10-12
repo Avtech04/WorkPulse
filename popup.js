@@ -1,11 +1,13 @@
-// document.getElementById('openWebpage').addEventListener('click', function() {
-//     chrome.tabs.create({ url: 'https://youtube.com' }); 
-// });
 
 var remainingTask, completedTask;
-var pomodoroTime = Number(25);
-window.onload = () => {
-    //chrome.storage.local.clear(()=>{});
+var focusTime=25;
+var cycleCount=4;
+
+window.onload = async () => {
+    await chrome.storage.local.get(["focusTime","longTimeCycle"], (res) => {
+        focusTime=res.focusTime;
+        cycleCount=res.longTimeCycle;
+    })
     refreshTasks();
 }
 
@@ -34,10 +36,9 @@ addTaskInput.addEventListener('keypress', (event) => {
     }
 })
 const addTask = () => {
-    var val = 4;
     const task = {
         text: addTaskInput.value,
-        pomodoroCycle: val,
+        pomodoroCycle: cycleCount,
         done: false,
         completedCycle: 0,
         index: 0,
@@ -59,8 +60,9 @@ const addTask = () => {
 
 
 //update the total time, elapsed time, remaining task, completed task
-const updateSecondCotainer = () => {
+const updateSecondCotainer = async() => {
 
+    console.log(focusTime);
     const remTaskCount = document.getElementById('task-cnt');
     remTaskCount.innerText = remainingTask.length;
 
@@ -72,12 +74,12 @@ const updateSecondCotainer = () => {
 
     remainingTask.forEach((task) => {
 
-        remTotalTime += (Number(task.pomodoroCycle)) * pomodoroTime;
+        remTotalTime += (Number(task.pomodoroCycle)) * focusTime;
         console.log(remTotalTime);
     });
 
     completedTask.forEach((task) => {
-        elapTotalTime += (Number(task.pomodoroCycle)) * pomodoroTime;
+        elapTotalTime += (Number(task.pomodoroCycle)) * focusTime;
     })
 
     var hour = Math.floor((remTotalTime + elapTotalTime) / 60);

@@ -34,6 +34,7 @@
        "tabs",
        "storage",
        "notifications"
-     ]
+     ],
+     "options_page":"option/option.html"
   }
   
