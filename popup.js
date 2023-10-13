@@ -133,3 +133,8 @@ const renderTask = (task, index) => {
     taskContainer.appendChild(taskRow);
 }
 
+//
+const createPlaylist=document.getElementById('create-playlist');
+createPlaylist.addEventListener('click',()=>{
+    window.location.href="search.html";
+})

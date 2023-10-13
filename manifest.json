@@ -22,12 +22,13 @@
       "128": "icon.png"
     },
     "background": {
-      "service_worker": "background.js"
+      "service_worker":"background.js"
+      
     },
     "content_scripts": [
       {
         "matches": ["<all_urls>"],
-        "js": ["Content.js"]
+        "js": ["Content.js", "jquery.js","search.js"]
       }
     ],
      "permissions": [
@@ -36,5 +37,6 @@
        "notifications"
      ],
      "options_page":"option/option.html"
+     
   }
   

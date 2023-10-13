@@ -13,6 +13,33 @@ window.onload=async()=>{
         countTimer=focuTime*60;
         flipAllCards(countTimer);
     })
+
+    await chrome.storage.local.get("playlist",(data)=>{
+        if (typeof data.playlist === 'undefined') {
+            //no music added to playlist
+        } else {
+            var playlist=data.playlist;
+            console.log(playlist);
+            const videosContainer=document.getElementById('playlist-videos');
+            
+            playlist.forEach((video) => {
+                const outerDiv=document.createElement('div');
+                const title=document.createElement('h2');
+                title.innerText=video.videoTitle;
+                const vidImg=document.createElement('img');
+                vidImg.setAttribute("src",`${video.videoThumbnail}`)
+                outerDiv.append(title);
+                outerDiv.append(vidImg);
+                // const videoElement = `<div>
+                //                         <h2>${video.videoTitle}</h2>
+                //                         <img src="${video.videoThumbnail}" alt="${video.videoTitle}">
+                //                    </div>`;
+                
+                videosContainer.append(outerDiv);
+            });
+            
+        }
+    })
     
 }
 

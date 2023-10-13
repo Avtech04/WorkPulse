@@ -17,7 +17,7 @@ function searchYouTubeVideos(query) {
         videosContainer.empty(); // Clear previous results
 
         // Iterate through the video items and display them.
-        data.items.forEach(function(item) {
+        data.items.forEach(function(item,index) {
             const videoId = item.id.videoId;
             const videoTitle = item.snippet.title;
             const videoThumbnail = item.snippet.thumbnails.medium.url;
@@ -25,11 +25,30 @@ function searchYouTubeVideos(query) {
             // Create a new video element and append it to the videos container.
             const videoElement = `<div class="video-box">
                                     <h2>${videoTitle}</h2>
-                                    <a href="https://www.youtube.com/watch?v=${videoId}" target="_blank">
+
                                         <img src="${videoThumbnail}" alt="${videoTitle}" class="imgg">
-                                    </a>
+                                        <button id="add-playlist-${index}">Add to PlayList</button>
                                    </div>`;
+            
             videosContainer.append(videoElement);
+            const addVideo=document.getElementById(`add-playlist-${index}`);
+            addVideo.addEventListener('click',()=>{
+                var video={
+                    videoId,
+                    videoThumbnail,
+                    videoTitle
+                }
+                chrome.storage.local.get("playlist", (data) => {
+                    if (typeof data.playlist === 'undefined') {
+                        data.playlist = [video];
+                    } else {
+                        
+                        data.playlist.push(video);
+                    }
+                    chrome.storage.local.set({ "playlist": data.playlist });
+                })
+            })
+            
         });
     });
 }
