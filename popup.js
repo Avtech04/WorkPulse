@@ -1,13 +1,14 @@
 
 var remainingTask, completedTask;
-var focusTime=25;
-var cycleCount=4;
+var focusTime = 25;
+var cycleCount = 4;
 
 window.onload = async () => {
-    await chrome.storage.local.get(["focusTime","longTimeCycle"], (res) => {
-        focusTime=res.focusTime;
-        cycleCount=res.longTimeCycle;
+    await chrome.storage.local.get(["focusTime", "longTimeCycle"], (res) => {
+        focusTime = res.focusTime;
+        cycleCount = res.longTimeCycle;
     })
+    chrome.storage.local.set({ "state": "none" });
     refreshTasks();
 }
 
@@ -30,20 +31,36 @@ const refreshTasks = () => {
 
 //add tasks
 const addTaskInput = document.getElementById('task-input');
+const cycleInput = document.getElementById('cycles');
 addTaskInput.addEventListener('keypress', (event) => {
     if (event.key == 'Enter' && addTaskInput.value != "") {
-        addTask();
+        if (cycleInput.value != "") {
+            addTask();
+        } else {
+            alert("please add number of cycles");
+        }
+    }
+})
+cycleInput.addEventListener('keypress', (event) => {
+    if (event.key == 'Enter' && cycleInput.value != "") {
+        if (addTaskInput.value != "") {
+            addTask();
+        } else {
+            alert("please add number of cycles");
+        }
     }
 })
 const addTask = () => {
     const task = {
         text: addTaskInput.value,
-        pomodoroCycle: cycleCount,
+        pomodoroCycle: cycleInput.value,
         done: false,
         completedCycle: 0,
+        state: "pomodoro",
         index: 0,
     }
     addTaskInput.value = "";
+    cycleInput.value = "";
     chrome.storage.local.get("tasks", (data) => {
         if (typeof data.tasks === 'undefined') {
             data.tasks = [task];
@@ -60,7 +77,7 @@ const addTask = () => {
 
 
 //update the total time, elapsed time, remaining task, completed task
-const updateSecondCotainer = async() => {
+const updateSecondCotainer = async () => {
 
     console.log(focusTime);
     const remTaskCount = document.getElementById('task-cnt');
@@ -82,16 +99,16 @@ const updateSecondCotainer = async() => {
         elapTotalTime += (Number(task.pomodoroCycle)) * focusTime;
     })
 
-    
+
     const estimateTime = document.getElementById('estimated-time');
-    timeCalculator(remTotalTime,estimateTime);
-    const  elapsedTime=document.getElementById('elapsed-time');
-    
-    timeCalculator(elapTotalTime,elapsedTime);
+    timeCalculator(remTotalTime, estimateTime);
+    const elapsedTime = document.getElementById('elapsed-time');
+
+    timeCalculator(elapTotalTime, elapsedTime);
 
 }
 
-const timeCalculator=(time,element)=>{
+const timeCalculator = (time, element) => {
     var hour = Math.floor((time) / 60);
     var min = (time) % 60
     if (hour) {
@@ -150,7 +167,7 @@ const renderTask = (task, index) => {
 }
 
 //
-const createPlaylist=document.getElementById('create-playlist');
-createPlaylist.addEventListener('click',()=>{
-    window.location.href="search.html";
+const createPlaylist = document.getElementById('create-playlist');
+createPlaylist.addEventListener('click', () => {
+    window.location.href = "search.html";
 })

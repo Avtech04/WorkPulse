@@ -2,12 +2,16 @@ var index = 0;
 var task;
 var state = "pomodoro";
 var pause = 1;
-var focuTime = 25, shortTime = 5, longTime = 15, cycle = 4;
-var countTimer = focuTime * 60;
+var focuTime, shortTime, longTime, cycle;
+var countTimer;
 var playlist;
 const videosContainer = document.getElementById('playlist-videos');
+const mode = document.getElementById('current-mode');
+const taskSpan = document.getElementById('task');
+const cycleSpan = document.getElementById('cycles');
 
 window.onload = async () => {
+
     await chrome.storage.local.get(["focusTime", "shortTime", "longTime", "longTimeCycle"], (res) => {
         focuTime = res.focusTime;
         shortTime = res.shortTime;
@@ -28,32 +32,56 @@ window.onload = async () => {
         }
     })
 
+    await chrome.storage.local.get("index", (data) => {
+        index = data.index;
+    });
+    await chrome.storage.local.get("remainingTask", (data) => {
+        task = data.remainingTask[index];
+        taskSpan.innerText = task.text;
+        state = task.state;
+        mode.innerText = state;
+        if (state == "shortBreak") {
+            shortBreak();
+        } else if (state == "longBreak") {
+            longBreak();
+        } else {
+            focusMode();
+        }
+    })
 }
+
+
 //render videos
 
 const renderVideos = () => {
     videosContainer.innerHTML = "";
     playlist.forEach((video, index) => {
+
         const outerDiv = document.createElement('div');
         outerDiv.classList.add('small-div')
+
         const title = document.createElement('h4');
         title.classList.add('side_head')
         title.innerText = video.videoTitle;
+
         const vidImg = document.createElement('img');
         vidImg.setAttribute("src", `${video.videoThumbnail}`)
         vidImg.classList.add('side-img')
-        const deleteBtn=document.createElement('button');
-        deleteBtn.innerText="Delete";
+
+        const deleteBtn = document.createElement('button');
+        deleteBtn.innerText = "Delete";
         deleteBtn.classList.add('delete-btn')
-        deleteBtn.addEventListener('click',()=>{
+        deleteBtn.addEventListener('click', () => {
             deleteVideo(index);
         })
+
         outerDiv.append(vidImg);
         outerDiv.append(title);
         outerDiv.append(deleteBtn);
         videosContainer.append(outerDiv);
     });
 }
+//delete Videos
 const deleteVideo = (index) => {
     playlist.splice(index, 1);
     renderVideos();
@@ -63,17 +91,6 @@ const deleteVideo = (index) => {
 const saveVideos = () => {
     chrome.storage.local.set({ "playlist": playlist });
 }
-
-//retriving data of task
-const taskSpan = document.getElementById('task');
-const cycleSpan = document.getElementById('cycles');
-chrome.storage.local.get("index", (data) => {
-    index = data.index;
-});
-chrome.storage.local.get("remainingTask", (data) => {
-    task = data.remainingTask[index];
-    taskSpan.innerText = task.text;
-})
 
 
 //countdown 
@@ -139,16 +156,25 @@ resetBtn.addEventListener('click', () => {
 
 //focusmode function
 const focusMode = () => {
+    task.state = "pomodoro";
+    saveTasks();
+    console.log(focuTime);
     flipAllCards(focuTime * 60);
+    console.log(focuTime);
     countTimer = focuTime * 60;
     startBtn.innerText = "Start";
+    mode.innerText = "Focus";
+    chrome.storage.local.set({ "state": "focus" });
 }
 
 //short Break function
 const shortBreak = () => {
+    task.state = "shortBreak";
+    saveTasks();
     flipAllCards(shortTime * 60);
     countTimer = shortTime * 60;
     startBtn.innerText = "Start";
+    mode.innerText = "Short Break";
     chrome.notifications.create(
         {
             title: 'WorkPulse',
@@ -156,14 +182,18 @@ const shortBreak = () => {
             iconUrl: './icon.png',
             type: 'basic'
         }
-    )
+    );
+    chrome.storage.local.set({ "state": "none" });
 }
 
 //long Break function
 const longBreak = () => {
+    task.state = "LongBreak";
+    saveTasks();
     flipAllCards(longTime * 60);
     countTimer = longTime * 60;
     startBtn.innerText = "Start";
+    mode.innerText = "Long Break";
     chrome.notifications.create(
         {
             title: 'WorkPulse',
@@ -172,15 +202,19 @@ const longBreak = () => {
             type: 'basic'
         }
     )
+    chrome.storage.local.set({ "state": "none" });
 }
-
-//task completed function
-const taskCompleted = () => {
-    task.done = true;
+//save Tasks
+const saveTasks = () => {
     chrome.storage.local.get("tasks", (data) => {
         data.tasks[index] = task;
         chrome.storage.local.set({ "tasks": data.tasks });
     });
+}
+//task completed function
+const taskCompleted = () => {
+    task.done = true;
+    saveTasks();
 
     chrome.notifications.create(
         {
@@ -249,25 +283,25 @@ backBtn.addEventListener('click', () => {
 var play = 0;
 const playBtn = document.getElementById('play-btn');
 playBtn.addEventListener('click', async () => {
-    if(playlist.length===0){
+    if (playlist.length === 0) {
         alert("no songs added to playlist");
-    }else{
-    play = 1 - play;
-    var video_index = 0;
-    while (play == 1) {
-        var windowId;
-        chrome.windows.create({
-            'url': `https://www.youtube.com/watch?v=${playlist[video_index].videoId}`,
-            'state': 'minimized'
-        }, (window) => {
-            windowId = window.id;
-        })
-        await sleep(1000 * 60 * 3);
-        chrome.windows.remove(windowId);
-        video_index = video_index + 1;
-        video_index = video_index % playlist.length;
+    } else {
+        play = 1 - play;
+        var video_index = 0;
+        while (play == 1) {
+            var windowId;
+            chrome.windows.create({
+                'url': `https://www.youtube.com/watch?v=${playlist[video_index].videoId}`,
+                'state': 'minimized'
+            }, (window) => {
+                windowId = window.id;
+            })
+            await sleep(1000 * 60 * 3);
+            chrome.windows.remove(windowId);
+            video_index = video_index + 1;
+            video_index = video_index % playlist.length;
+        }
     }
-}
 })
 //function for pausing
 async function sleep(ms) {
