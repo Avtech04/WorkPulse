@@ -13,21 +13,61 @@
         }
         .video-box{
             display: inline-block;
-    width: 28vw;
-    background-color: black;
+    width: 29vw;
+    background-color: #9e385b;
     color: white;
-    margin: 20px;
+    margin: 15px;
     text-align: center;
-    height: 50vh;
+    height: 45vh;
+    border-radius: 20px;
         }
         .imgg{
-            width: 90%;
-            height: 20vh;
+            width: 92%;
+    height: 25vh;
+    margin-top: 20px;
+    border-radius: 12px;
+        }
+        .heading{
+            font-size: 30px;
+            color: blueviolet;
+            text-align: center;
+            padding: 20px;
+        }
+        .search_options{
+            width: 100vw;
+            justify-content: center;
+            text-align: center;
+        }
+
+        #search{
+            padding: 10px;
+    width: 48vw;
+    border: 2px solid black;
+    border-radius: 21px;
+    margin: 12px;
+        }
+
+        #search-btn{
+            padding: 10px;
+    border: 2px solid #8E24AA;
+    border-radius: 10px;
+    background-color: #8E24AA;
+    color: white;
+    cursor: pointer;
+        }
+        .play{
+            background-color: rgb(178, 233, 235);
+    padding: 9px;
+    border-radius: 12px;
+    border: 1px;
+    margin: 10px;
+    cursor: pointer;
         }
     </style>
 </head>
 <body>
-    <div>
+    <div class="heading">Create your Playlist Here! </div>
+    <div class="search_options">
         <input type="text" name="search" id="search">
         <button id="search-btn">Search</button>
     </div>

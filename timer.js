@@ -24,12 +24,16 @@ window.onload=async()=>{
             
             playlist.forEach((video) => {
                 const outerDiv=document.createElement('div');
+                outerDiv.classList.add('small-div')
                 const title=document.createElement('h2');
+                title.classList.add('side_head')
                 title.innerText=video.videoTitle;
                 const vidImg=document.createElement('img');
                 vidImg.setAttribute("src",`${video.videoThumbnail}`)
-                outerDiv.append(title);
+                vidImg.classList.add('side-img')
                 outerDiv.append(vidImg);
+                outerDiv.append(title);
+                
                 // const videoElement = `<div>
                 //                         <h2>${video.videoTitle}</h2>
                 //                         <img src="${video.videoThumbnail}" alt="${video.videoTitle}">

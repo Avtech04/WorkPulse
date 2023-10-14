@@ -24,10 +24,13 @@ function searchYouTubeVideos(query) {
 
             // Create a new video element and append it to the videos container.
             const videoElement = `<div class="video-box">
-                                    <h2>${videoTitle}</h2>
+                                    
 
                                         <img src="${videoThumbnail}" alt="${videoTitle}" class="imgg">
-                                        <button id="add-playlist-${index}">Add to PlayList</button>
+                                        <h3 style="
+                                    font-size: 12px;height: 4vh;
+                                ">${videoTitle}</h3>
+                                        <button class="play" id="add-playlist-${index}">Add to PlayList</button>
                                    </div>`;
             
             videosContainer.append(videoElement);

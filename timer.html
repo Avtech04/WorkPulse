@@ -158,16 +158,47 @@
       margin-left:62px ;
 
     }
+    .left{
+      width: 30%;
+      background-color: aqua;
+    }
+    .right{
+      width: 70%;
+      justify-content: center;
+      align-items: center;
+    }
+    .page{
+      display: flex;
+      flex-direction: row;
+    }
+    .side_head{
+   
+    font-size: 12px;
+
+    }
+    .small-div{
+      display: flex;
+      flex-direction: row;
+    }
+
+    .side-img{
+      width: 82px;
+    height: 54px;
+    border-radius: 8px;
+    }
   </style>
 
 </head>
-
-<body>
+<div class="page">
+<div class="left">
   <div class="playlist-container">
     <div>Your Playlist</div>
     <div id="playlist-videos">
     </div>
   </div>
+</div>
+
+  <div class="right">
   <div class="container">
     <div class="time">
     <div class="container-segment">
@@ -218,10 +249,11 @@
     </div>
   </div>
   <div class="info">
-  <span id="task">hello</span>
+  <span id="task">Hello</span>
   <!-- <span id="cycles">Cycles: 0/0</span> -->
 </div>
-
+</div>
+</div>
 </body>
 
 <script src="timer.js"></script>
