@@ -57,6 +57,9 @@ padding: 20px;
     /* background-color:rgb(206, 102, 16);  */
     height: 8%;
     margin: 10px;
+    display: flex;
+    flex-direction: row;
+    /* width: 100vw; */
 }
 
 .fourth{
@@ -152,7 +155,10 @@ button{
     border: 1px;
     cursor: pointer;
 }
-
+#task-input{
+    width: 60vw;
+    margin-right: 10px;
+}
 
 .task-row{
     background-color: #0c4b59;
