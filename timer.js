@@ -44,6 +44,7 @@ const renderVideos=()=>{
         vidImg.classList.add('side-img')
         const deleteBtn=document.createElement('button');
         deleteBtn.innerText="Delete";
+        deleteBtn.classList.add('delete-btn')
         deleteBtn.addEventListener('click',()=>{
             deleteVideo(index);
         })

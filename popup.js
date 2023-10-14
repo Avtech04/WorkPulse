@@ -115,6 +115,11 @@ const renderTask = (task, index) => {
     startBtn.innerText = "Start";
     startBtn.classList.add('pp2');
 
+
+    const deletBtn = document.createElement('button');
+    deletBtn.innerText = "Remove";
+    deletBtn.classList.add('remove');
+
     startBtn.addEventListener('click', () => {
         chrome.storage.local.set({ "index": index });
         chrome.storage.local.set({ "remainingTask": remainingTask });
@@ -129,6 +134,7 @@ const renderTask = (task, index) => {
 
     taskRow.appendChild(text);
     taskRow.appendChild(startBtn);
+    taskRow.appendChild(deletBtn);
     taskRow.appendChild(cycle);
     taskContainer.appendChild(taskRow);
 }

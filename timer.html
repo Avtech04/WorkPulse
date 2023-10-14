@@ -146,10 +146,13 @@
 
     .info {
       display: flex;
-      flex-direction: column;
-      position: absolute;
-      left: 40%;
-      top: 10%;
+    flex-direction: column;
+    /* position: absolute; */
+    /* left: 40%; */
+    top: 10%;
+    align-items: center;
+    text-align: center;
+    margin-top: 12vh;
     }
 
     #task {
@@ -168,6 +171,7 @@
     .left {
       width: 30%;
       background-color: #321181;
+      min-height: 100vh;
     }
 
     .right {
@@ -182,12 +186,20 @@
     }
 
     .side_head {
-      font-size: 12px;
-      margin-left: 12px;
-      color: black;
-
+      font-size: 10px;
+    margin-left: 12px;
+    color: black;
+    font-family: monospace;
     }
-
+#back{
+  margin-top: 20px;
+    cursor: pointer;
+    background-color: #2320b5;
+    border: 1px;
+    color: white;
+    padding: 7px;
+    border-radius: 10px
+}
     .small-div {
       display: flex;
       flex-direction: row;
@@ -201,6 +213,7 @@
       width: 82px;
       height: 54px;
       border-radius: 8px;
+      margin-top:5px ;
     }
 
     .demo {
@@ -217,6 +230,33 @@
       top: 0%;
       font-size: 20px;
       cursor: pointer;
+    }
+    .delete-btn{
+      font-size: 16px;
+    padding: 8px;
+    height: 9vh;
+    background-color: #25508d;
+    color: white;
+    border: 1px;
+    border-radius: 12px;
+    margin-left: 12px;
+cursor: pointer;
+    }
+    #play-btn{
+      font-size: 23px;
+    text-align: center;
+    /* margin: auto; */
+    margin-left: 35%;
+    cursor: pointer;
+    }
+    .mode{
+      display: flex;
+    flex-direction: row;
+    width: 25%;
+    background-color: #321181;
+    margin-left:27vw; 
+    margin-top: 12px;
+    border-radius: 12px;
     }
   </style>
 
@@ -284,6 +324,24 @@
     <div class="info">
       <span id="task">Hello</span>
       <!-- <span id="cycles">Cycles: 0/0</span> -->
+    </div>
+    <div class="mode">
+      <div style="
+          font-size: 22px;
+    color: white;
+  
+    margin: 9px;
+    padding: 13px;
+    /* border-radius: 11px; */
+  ">Mode </div>
+      <div style="
+          font-size: 22px;
+    color: white;
+    background-color: #6161be;
+    margin: 9px;
+    padding: 13px;
+    border-radius: 11px;
+  ">Focus</div>
     </div>
   </div>
 </div>
