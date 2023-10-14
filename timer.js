@@ -25,7 +25,7 @@ window.onload=async()=>{
             playlist.forEach((video) => {
                 const outerDiv=document.createElement('div');
                 outerDiv.classList.add('small-div')
-                const title=document.createElement('h2');
+                const title=document.createElement('h4');
                 title.classList.add('side_head')
                 title.innerText=video.videoTitle;
                 const vidImg=document.createElement('img');

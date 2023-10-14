@@ -112,7 +112,7 @@
       flex-direction: row;
       position: absolute;
       top: 32%;
-      left: 30%;
+      left: 45%;
     }
 
 
@@ -123,6 +123,7 @@
     border: 2px;
     border-radius: 11px;
     padding: 12px 12px 10px 10px;
+    cursor: pointer;
     }
 
 
@@ -133,24 +134,27 @@
     border: 2px;
     border-radius: 11px;
     padding: 12px 12px 10px 10px;
+    cursor: pointer;
     }
 
     .options{
       position: absolute;
       top: 64%;
-      left: 40%;
+      left: 60%;
     }
     .info{
       display: flex;
       flex-direction: column;
       position: absolute;
-      left: 43%;
+      left: 40%;
+    top: 10%;
     }
 
     #task{
       color: black;
-      text-transform:uppercase;
-      font-size: 60px;
+      text-transform: capitalize;
+    font-size: 34px;
+    text-align: center;
     }
 
     #cycles{
@@ -160,7 +164,7 @@
     }
     .left{
       width: 30%;
-      background-color: aqua;
+      background-color: #321181;
     }
     .right{
       width: 70%;
@@ -172,13 +176,18 @@
       flex-direction: row;
     }
     .side_head{
-   
-    font-size: 12px;
+      font-size: 12px;
+    margin-left: 12px;
+    color: black;
 
     }
     .small-div{
       display: flex;
-      flex-direction: row;
+    flex-direction: row;
+    padding: 10px;
+    background-color: #cdcde9;
+    font-family: monospace;
+    margin: 2px;
     }
 
     .side-img{
@@ -186,13 +195,28 @@
     height: 54px;
     border-radius: 8px;
     }
+
+    .demo{
+      font-size: 50px;
+    text-align: center;
+    padding: 10px;
+    color: white;
+    background-color: #321181;
+    }
+    #back{
+      position: absolute;
+      left: 90%;
+      top: 0%;
+      font-size: 20px;
+      cursor: pointer;
+    }
   </style>
 
 </head>
 <div class="page">
 <div class="left">
   <div class="playlist-container">
-    <div>Your Playlist</div>
+    <div class="demo">Your Playlist</div>
     <div id="playlist-videos">
     </div>
   </div>
@@ -254,6 +278,7 @@
 </div>
 </div>
 </div>
+<button id="back">Back</button>
 </body>
 
 <script src="timer.js"></script>
