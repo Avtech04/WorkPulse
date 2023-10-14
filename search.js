@@ -24,8 +24,6 @@ function searchYouTubeVideos(query) {
 
             // Create a new video element and append it to the videos container.
             const videoElement = `<div class="video-box">
-                                    
-
                                         <img src="${videoThumbnail}" alt="${videoTitle}" class="imgg">
                                         <h3 style="
                                     font-size: 12px;height: 4vh;
@@ -35,8 +33,10 @@ function searchYouTubeVideos(query) {
             
             videosContainer.append(videoElement);
             const addVideo=document.getElementById(`add-playlist-${index}`);
+            var vidIndex=0;
             addVideo.addEventListener('click',()=>{
                 var video={
+                    vidIndex,
                     videoId,
                     videoThumbnail,
                     videoTitle
@@ -45,7 +45,7 @@ function searchYouTubeVideos(query) {
                     if (typeof data.playlist === 'undefined') {
                         data.playlist = [video];
                     } else {
-                        
+                        video.vidIndex=data.playlist.length;
                         data.playlist.push(video);
                     }
                     chrome.storage.local.set({ "playlist": data.playlist });
@@ -62,4 +62,10 @@ searchBtn.addEventListener('click',()=>{
     var searchTxt=searchInput.value;
     console.log(searchTxt);
     searchYouTubeVideos(`${searchTxt} videos`);
+})
+
+//back
+const backBtn=document.getElementById('back');
+backBtn.addEventListener('click',()=>{
+    window.location.href="popup.html";
 })

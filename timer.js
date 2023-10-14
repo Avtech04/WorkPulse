@@ -4,6 +4,9 @@ var state = "pomodoro";
 var pause = 1;
 var focuTime=25,shortTime=5,longTime=15,cycle=4;
 var countTimer = focuTime * 60;
+var playlist;
+const videosContainer=document.getElementById('playlist-videos');
+
 window.onload=async()=>{
     await chrome.storage.local.get(["focusTime", "shortTime", "longTime","longTimeCycle"], (res) => {
         focuTime=res.focusTime;
@@ -18,33 +21,46 @@ window.onload=async()=>{
         if (typeof data.playlist === 'undefined') {
             //no music added to playlist
         } else {
-            var playlist=data.playlist;
+            playlist=data.playlist;
             console.log(playlist);
-            const videosContainer=document.getElementById('playlist-videos');
-            
-            playlist.forEach((video) => {
-                const outerDiv=document.createElement('div');
-                outerDiv.classList.add('small-div')
-                const title=document.createElement('h4');
-                title.classList.add('side_head')
-                title.innerText=video.videoTitle;
-                const vidImg=document.createElement('img');
-                vidImg.setAttribute("src",`${video.videoThumbnail}`)
-                vidImg.classList.add('side-img')
-                outerDiv.append(vidImg);
-                outerDiv.append(title);
-                
-                // const videoElement = `<div>
-                //                         <h2>${video.videoTitle}</h2>
-                //                         <img src="${video.videoThumbnail}" alt="${video.videoTitle}">
-                //                    </div>`;
-                
-                videosContainer.append(outerDiv);
-            });
+            renderVideos();
             
         }
     })
     
+}
+//render videos
+
+const renderVideos=()=>{
+    videosContainer.innerHTML="";
+    playlist.forEach((video,index) => {
+        const outerDiv=document.createElement('div');
+        outerDiv.classList.add('small-div')
+        const title=document.createElement('h4');
+        title.classList.add('side_head')
+        title.innerText=video.videoTitle;
+        const vidImg=document.createElement('img');
+        vidImg.setAttribute("src",`${video.videoThumbnail}`)
+        vidImg.classList.add('side-img')
+        const deleteBtn=document.createElement('button');
+        deleteBtn.innerText="Delete";
+        deleteBtn.addEventListener('click',()=>{
+            deleteVideo(index);
+        })
+        outerDiv.append(vidImg);
+        outerDiv.append(title);
+        outerDiv.append(deleteBtn);
+        videosContainer.append(outerDiv);
+    });
+}
+const deleteVideo=(index)=>{
+    playlist.splice(index,1);
+    renderVideos();
+    saveVideos();
+}
+
+const saveVideos=()=>{
+    chrome.storage.local.set({"playlist":playlist});
 }
 
 //retriving data of task
@@ -221,3 +237,15 @@ function flip(flipCard, newNumber) {
     })
     flipCard.append(topFlip, bottomFlip)
 }
+
+//back button
+const backBtn=document.getElementById('back');
+backBtn.addEventListener('click',()=>{
+    window.location.href="popup.html";
+})
+
+//play song 
+
+const playBtn=document.getElementById('play-btn');
+playBtn.addEventListener('click',()=>{
+})

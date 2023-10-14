@@ -13,7 +13,7 @@
     *::before {
       box-sizing: border-box;
       font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
- font-size: 2.25rem;
+      font-size: 2.25rem;
     }
 
     body {
@@ -107,7 +107,8 @@
     .segment-title {
       font-size: 1rem;
     }
-    .time{
+
+    .time {
       display: flex;
       flex-direction: row;
       position: absolute;
@@ -116,94 +117,101 @@
     }
 
 
-    .start{
+    .start {
       font-size: 33px;
-    background-color: blue;
-    color: white;
-    border: 2px;
-    border-radius: 11px;
-    padding: 12px 12px 10px 10px;
-    cursor: pointer;
+      background-color: blue;
+      color: white;
+      border: 2px;
+      border-radius: 11px;
+      padding: 12px 12px 10px 10px;
+      cursor: pointer;
     }
 
 
-    .pause{
+    .pause {
       font-size: 33px;
-    background-color: blue;
-    color: white;
-    border: 2px;
-    border-radius: 11px;
-    padding: 12px 12px 10px 10px;
-    cursor: pointer;
+      background-color: blue;
+      color: white;
+      border: 2px;
+      border-radius: 11px;
+      padding: 12px 12px 10px 10px;
+      cursor: pointer;
     }
 
-    .options{
+    .options {
       position: absolute;
       top: 64%;
       left: 60%;
     }
-    .info{
+
+    .info {
       display: flex;
       flex-direction: column;
       position: absolute;
       left: 40%;
-    top: 10%;
+      top: 10%;
     }
 
-    #task{
+    #task {
       color: black;
       text-transform: capitalize;
-    font-size: 34px;
-    text-align: center;
+      font-size: 34px;
+      text-align: center;
     }
 
-    #cycles{
+    #cycles {
       font-size: 25px;
-      margin-left:62px ;
+      margin-left: 62px;
 
     }
-    .left{
+
+    .left {
       width: 30%;
       background-color: #321181;
     }
-    .right{
+
+    .right {
       width: 70%;
       justify-content: center;
       align-items: center;
     }
-    .page{
+
+    .page {
       display: flex;
       flex-direction: row;
     }
-    .side_head{
+
+    .side_head {
       font-size: 12px;
-    margin-left: 12px;
-    color: black;
+      margin-left: 12px;
+      color: black;
 
     }
-    .small-div{
+
+    .small-div {
       display: flex;
-    flex-direction: row;
-    padding: 10px;
-    background-color: #cdcde9;
-    font-family: monospace;
-    margin: 2px;
+      flex-direction: row;
+      padding: 10px;
+      background-color: #cdcde9;
+      font-family: monospace;
+      margin: 2px;
     }
 
-    .side-img{
+    .side-img {
       width: 82px;
-    height: 54px;
-    border-radius: 8px;
+      height: 54px;
+      border-radius: 8px;
     }
 
-    .demo{
+    .demo {
       font-size: 50px;
-    text-align: center;
-    padding: 10px;
-    color: white;
-    background-color: #321181;
+      text-align: center;
+      padding: 10px;
+      color: white;
+      background-color: #321181;
     }
-    #back{
+
+    #back {
       position: absolute;
       left: 90%;
       top: 0%;
@@ -214,73 +222,74 @@
 
 </head>
 <div class="page">
-<div class="left">
-  <div class="playlist-container">
-    <div class="demo">Your Playlist</div>
-    <div id="playlist-videos">
+  <div class="left">
+    <div class="playlist-container">
+      <div class="demo">Your Playlist</div>
+      <div id="playlist-videos">
+      </div>
     </div>
+    <button id="play-btn">Play Song</button>
   </div>
-</div>
 
   <div class="right">
-  <div class="container">
-    <div class="time">
-    <div class="container-segment">
-      <div class="segment-title">Hours</div>
-      <div class="segment">
-        <div class="flip-card" data-hours-tens>
-          <div class="top" id="Hour-tens-top">0</div>
-          <div class="bottom" id="Hour-tens-bottom">0</div>
+    <div class="container">
+      <div class="time">
+        <div class="container-segment">
+          <div class="segment-title">Hours</div>
+          <div class="segment">
+            <div class="flip-card" data-hours-tens>
+              <div class="top" id="Hour-tens-top">0</div>
+              <div class="bottom" id="Hour-tens-bottom">0</div>
+            </div>
+            <div class="flip-card" data-hours-ones>
+              <div class="top" id="Hour-ones-top">0</div>
+              <div class="bottom" id="Hour-ones-bottom">0</div>
+            </div>
+          </div>
         </div>
-        <div class="flip-card" data-hours-ones>
-          <div class="top" id="Hour-ones-top">0</div>
-          <div class="bottom" id="Hour-ones-bottom">0</div>
+        <div class="container-segment">
+          <div class="segment-title">Minutes</div>
+          <div class="segment">
+            <div class="flip-card" data-minutes-tens>
+              <div class="top" id="Min-tens-top">0</div>
+              <div class="bottom" id="Min-tens-bottom">0</div>
+            </div>
+            <div class="flip-card" data-minutes-ones>
+              <div class="top" id="Min-ones-top">0</div>
+              <div class="bottom" id="Min-ones-bottom">0</div>
+            </div>
+          </div>
+        </div>
+        <div class="container-segment">
+          <div class="segment-title">Seconds</div>
+          <div class="segment">
+            <div class="flip-card" data-seconds-tens>
+              <div class="top" id="Sec-tens-top">0</div>
+              <div class="bottom" id="Sec-tens-bottom">0</div>
+            </div>
+            <div class="flip-card" data-seconds-ones>
+              <div class="top" id="Sec-ones-top">0</div>
+              <div class="bottom" id="Sec-ones-bottom">0</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="options">
+        <div class="details">
+          <button class="start" id="start-btn">Start</button>
+          <button class="pause" id="reset-btn">Reset</button>
         </div>
       </div>
     </div>
-    <div class="container-segment">
-      <div class="segment-title">Minutes</div>
-      <div class="segment">
-        <div class="flip-card" data-minutes-tens>
-          <div class="top" id="Min-tens-top">0</div>
-          <div class="bottom" id="Min-tens-bottom">0</div>
-        </div>
-        <div class="flip-card" data-minutes-ones>
-          <div class="top" id="Min-ones-top">0</div>
-          <div class="bottom" id="Min-ones-bottom">0</div>
-        </div>
-      </div>
-    </div>
-    <div class="container-segment">
-      <div class="segment-title">Seconds</div>
-      <div class="segment">
-        <div class="flip-card" data-seconds-tens>
-          <div class="top" id="Sec-tens-top">0</div>
-          <div class="bottom" id="Sec-tens-bottom">0</div>
-        </div>
-        <div class="flip-card" data-seconds-ones>
-          <div class="top" id="Sec-ones-top">0</div>
-          <div class="bottom" id="Sec-ones-bottom">0</div>
-        </div>
-      </div>
-    </div>
-    </div>
-    <div class="options">
-      <div class="details">
-        <button class="start" id="start-btn">Start</button>
-        <button class="pause" id="reset-btn">Reset</button>
-      </div>
+    <div class="info">
+      <span id="task">Hello</span>
+      <!-- <span id="cycles">Cycles: 0/0</span> -->
     </div>
   </div>
-  <div class="info">
-  <span id="task">Hello</span>
-  <!-- <span id="cycles">Cycles: 0/0</span> -->
-</div>
-</div>
 </div>
 <button id="back">Back</button>
-</body>
 
+</body>
 <script src="timer.js"></script>
 
 </html>
