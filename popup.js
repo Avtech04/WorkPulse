@@ -82,15 +82,25 @@ const updateSecondCotainer = async() => {
         elapTotalTime += (Number(task.pomodoroCycle)) * focusTime;
     })
 
-    var hour = Math.floor((remTotalTime + elapTotalTime) / 60);
-    var min = (remTotalTime + elapTotalTime) % 60
-    const totalTime = document.getElementById('total-time');
+    
+    const estimateTime = document.getElementById('estimated-time');
+    timeCalculator(remTotalTime,estimateTime);
+    const  elapsedTime=document.getElementById('elapsed-time');
+    
+    timeCalculator(elapTotalTime,elapsedTime);
+
+}
+
+const timeCalculator=(time,element)=>{
+    var hour = Math.floor((time) / 60);
+    var min = (time) % 60
     if (hour) {
-        totalTime.innerText = hour + " h " + min + " min";
+        element.innerText = hour + " h " + min + " min";
     } else {
-        totalTime.innerText = min + " min";
+        element.innerText = min + " min";
     }
 }
+
 
 //Render Tasks
 

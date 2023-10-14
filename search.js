@@ -9,6 +9,7 @@ const API_URL = 'https://www.googleapis.com/youtube/v3/search';
 function searchYouTubeVideos(query) {
     $.get(API_URL, {
         part: 'snippet',
+        //part:'contentDetails',
         q: query,
         key: API_KEY
     }, function(data) {
@@ -18,6 +19,7 @@ function searchYouTubeVideos(query) {
 
         // Iterate through the video items and display them.
         data.items.forEach(function(item,index) {
+            console.log(item);
             const videoId = item.id.videoId;
             const videoTitle = item.snippet.title;
             const videoThumbnail = item.snippet.thumbnails.medium.url;

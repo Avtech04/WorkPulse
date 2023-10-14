@@ -2,45 +2,45 @@ var index = 0;
 var task;
 var state = "pomodoro";
 var pause = 1;
-var focuTime=25,shortTime=5,longTime=15,cycle=4;
+var focuTime = 25, shortTime = 5, longTime = 15, cycle = 4;
 var countTimer = focuTime * 60;
 var playlist;
-const videosContainer=document.getElementById('playlist-videos');
+const videosContainer = document.getElementById('playlist-videos');
 
-window.onload=async()=>{
-    await chrome.storage.local.get(["focusTime", "shortTime", "longTime","longTimeCycle"], (res) => {
-        focuTime=res.focusTime;
-        shortTime=res.shortTime;
-        longTime=res.longTime;
-        cycle=res.longTimeCycle;
-        countTimer=focuTime*60;
+window.onload = async () => {
+    await chrome.storage.local.get(["focusTime", "shortTime", "longTime", "longTimeCycle"], (res) => {
+        focuTime = res.focusTime;
+        shortTime = res.shortTime;
+        longTime = res.longTime;
+        cycle = res.longTimeCycle;
+        countTimer = focuTime * 60;
         flipAllCards(countTimer);
     })
 
-    await chrome.storage.local.get("playlist",(data)=>{
+    await chrome.storage.local.get("playlist", (data) => {
         if (typeof data.playlist === 'undefined') {
             //no music added to playlist
         } else {
-            playlist=data.playlist;
+            playlist = data.playlist;
             console.log(playlist);
             renderVideos();
-            
+
         }
     })
-    
+
 }
 //render videos
 
-const renderVideos=()=>{
-    videosContainer.innerHTML="";
-    playlist.forEach((video,index) => {
-        const outerDiv=document.createElement('div');
+const renderVideos = () => {
+    videosContainer.innerHTML = "";
+    playlist.forEach((video, index) => {
+        const outerDiv = document.createElement('div');
         outerDiv.classList.add('small-div')
-        const title=document.createElement('h4');
+        const title = document.createElement('h4');
         title.classList.add('side_head')
-        title.innerText=video.videoTitle;
-        const vidImg=document.createElement('img');
-        vidImg.setAttribute("src",`${video.videoThumbnail}`)
+        title.innerText = video.videoTitle;
+        const vidImg = document.createElement('img');
+        vidImg.setAttribute("src", `${video.videoThumbnail}`)
         vidImg.classList.add('side-img')
         const deleteBtn=document.createElement('button');
         deleteBtn.innerText="Delete";
@@ -54,14 +54,14 @@ const renderVideos=()=>{
         videosContainer.append(outerDiv);
     });
 }
-const deleteVideo=(index)=>{
-    playlist.splice(index,1);
+const deleteVideo = (index) => {
+    playlist.splice(index, 1);
     renderVideos();
     saveVideos();
 }
 
-const saveVideos=()=>{
-    chrome.storage.local.set({"playlist":playlist});
+const saveVideos = () => {
+    chrome.storage.local.set({ "playlist": playlist });
 }
 
 //retriving data of task
@@ -108,7 +108,7 @@ setInterval(() => {
         }
 
     }
-    
+
 }, 1000)
 
 
@@ -140,13 +140,13 @@ resetBtn.addEventListener('click', () => {
 //focusmode function
 const focusMode = () => {
     flipAllCards(focuTime * 60);
-    countTimer = focuTime* 60;
+    countTimer = focuTime * 60;
     startBtn.innerText = "Start";
 }
 
 //short Break function
 const shortBreak = () => {
-    flipAllCards(shortTime* 60);
+    flipAllCards(shortTime * 60);
     countTimer = shortTime * 60;
     startBtn.innerText = "Start";
     chrome.notifications.create(
@@ -196,7 +196,7 @@ const taskCompleted = () => {
 
 
 //clock updation in HTML
-async function  flipAllCards (time) {
+async function flipAllCards(time) {
 
     const seconds = time % 60
     const minutes = Math.floor(time / 60) % 60
@@ -240,13 +240,36 @@ function flip(flipCard, newNumber) {
 }
 
 //back button
-const backBtn=document.getElementById('back');
-backBtn.addEventListener('click',()=>{
-    window.location.href="popup.html";
+const backBtn = document.getElementById('back');
+backBtn.addEventListener('click', () => {
+    window.location.href = "popup.html";
 })
 
-//play song 
-
-const playBtn=document.getElementById('play-btn');
-playBtn.addEventListener('click',()=>{
+//playing song from playlist
+var play = 0;
+const playBtn = document.getElementById('play-btn');
+playBtn.addEventListener('click', async () => {
+    if(playlist.length===0){
+        alert("no songs added to playlist");
+    }else{
+    play = 1 - play;
+    var video_index = 0;
+    while (play == 1) {
+        var windowId;
+        chrome.windows.create({
+            'url': `https://www.youtube.com/watch?v=${playlist[video_index].videoId}`,
+            'state': 'minimized'
+        }, (window) => {
+            windowId = window.id;
+        })
+        await sleep(1000 * 60 * 3);
+        chrome.windows.remove(windowId);
+        video_index = video_index + 1;
+        video_index = video_index % playlist.length;
+    }
+}
 })
+//function for pausing
+async function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
