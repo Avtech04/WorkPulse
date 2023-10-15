@@ -35,8 +35,8 @@ window.onload = async () => {
     await chrome.storage.local.get("index", (data) => {
         index = data.index;
     });
-    await chrome.storage.local.get("remainingTask", (data) => {
-        task = data.remainingTask[index];
+    await chrome.storage.local.get("tasks", (data) => {
+        task = data.tasks[index];
         taskSpan.innerText = task.text;
         state = task.state;
         mode.innerText = state;
@@ -48,8 +48,14 @@ window.onload = async () => {
             focusMode();
         }
     })
+    
 }
 
+window.onunload=function(){
+    if(windowId!=-1){
+        chrome.windows.remove(windowId);
+    }
+}
 
 //render videos
 
@@ -83,9 +89,13 @@ const renderVideos = () => {
 }
 //delete Videos
 const deleteVideo = (index) => {
+    if(play==1){
+        alert("You Can't Delete while Songs are Playing")
+    }else{
     playlist.splice(index, 1);
     renderVideos();
     saveVideos();
+    }
 }
 
 const saveVideos = () => {
@@ -102,10 +112,8 @@ setInterval(() => {
             pause = 1;
             if (state === "pomodoro") {
                 task.completedCycle += 1;
-                chrome.storage.local.get("tasks", (data) => {
-                    data.tasks[index] = task;
-                    chrome.storage.local.set({ "tasks": data.tasks });
-                })
+                saveTasks();
+
                 if (task.completedCycle == task.pomodoroCycle) {
                     taskCompleted();
                 }
@@ -206,6 +214,7 @@ const longBreak = () => {
 }
 //save Tasks
 const saveTasks = () => {
+
     chrome.storage.local.get("tasks", (data) => {
         data.tasks[index] = task;
         chrome.storage.local.set({ "tasks": data.tasks });
@@ -276,11 +285,15 @@ function flip(flipCard, newNumber) {
 //back button
 const backBtn = document.getElementById('back');
 backBtn.addEventListener('click', () => {
+    if(windowId!=-1){
+        chrome.windows.remove(windowId);
+    }
     window.location.href = "popup.html";
 })
 
 //playing song from playlist
 var play = 0;
+var windowId=-1;
 const playBtn = document.getElementById('play-btn');
 playBtn.addEventListener('click', async () => {
     if (playlist.length === 0) {
@@ -288,18 +301,26 @@ playBtn.addEventListener('click', async () => {
     } else {
         play = 1 - play;
         var video_index = 0;
-        while (play == 1) {
-            var windowId;
-            chrome.windows.create({
-                'url': `https://www.youtube.com/watch?v=${playlist[video_index].videoId}`,
-                'state': 'minimized'
-            }, (window) => {
-                windowId = window.id;
-            })
-            await sleep(1000 * 60 * 3);
-            chrome.windows.remove(windowId);
-            video_index = video_index + 1;
-            video_index = video_index % playlist.length;
+        if (play == 0) {
+            playBtn.innerText="Play Songs";
+            if(windowId!=-1){
+                chrome.windows.remove(windowId);
+            }
+        } else {
+            playBtn.innerText="Pause Songs";
+            while (play == 1) {
+                
+                chrome.windows.create({
+                    'url': `https://www.youtube.com/watch?v=${playlist[video_index].videoId}`,
+                    'state': 'minimized'
+                }, (window) => {
+                    windowId = window.id;
+                })
+                await sleep(1000 * 60 * 3);
+                chrome.windows.remove(windowId);
+                video_index = video_index + 1;
+                video_index = video_index % playlist.length;
+            }
         }
     }
 })

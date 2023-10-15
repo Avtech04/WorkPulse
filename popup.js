@@ -2,7 +2,7 @@
 var remainingTask, completedTask;
 var focusTime = 25;
 var cycleCount = 4;
-
+var tasks;
 window.onload = async () => {
     await chrome.storage.local.get(["focusTime", "longTimeCycle"], (res) => {
         focusTime = res.focusTime;
@@ -17,7 +17,7 @@ window.onload = async () => {
 const refreshTasks = () => {
     taskContainer.innerHTML = "";
     chrome.storage.local.get("tasks", (data) => {
-        console.log(data.tasks);
+        tasks=data.tasks;
         remainingTask = data.tasks.filter((task) => {
             return task.done === false;
         })
@@ -57,7 +57,6 @@ const addTask = () => {
         done: false,
         completedCycle: 0,
         state: "pomodoro",
-        index: 0,
     }
     addTaskInput.value = "";
     cycleInput.value = "";
@@ -65,7 +64,6 @@ const addTask = () => {
         if (typeof data.tasks === 'undefined') {
             data.tasks = [task];
         } else {
-            task.index = data.tasks.length;
             data.tasks.push(task);
         }
         chrome.storage.local.set({ "tasks": data.tasks });
@@ -91,7 +89,7 @@ const updateSecondCotainer = async () => {
 
     remainingTask.forEach((task) => {
 
-        remTotalTime += (Number(task.pomodoroCycle)) * focusTime;
+        remTotalTime += (Number(task.pomodoroCycle - task.completedCycle)) * focusTime;
         console.log(remTotalTime);
     });
 
@@ -123,8 +121,10 @@ const timeCalculator = (time, element) => {
 
 const renderTasks = () => {
     updateSecondCotainer();
-    remainingTask.forEach((task, index) => {
-        renderTask(task, index);
+    tasks.forEach((task, index) => {
+        if(task.done===false){
+            renderTask(task, index);
+        }
     })
 }
 const taskContainer = document.getElementById('tasks');
@@ -147,9 +147,12 @@ const renderTask = (task, index) => {
     deletBtn.innerText = "Remove";
     deletBtn.classList.add('remove');
 
+    deletBtn.addEventListener('click',async()=>{
+        await deleteTask(index);
+    })
+
     startBtn.addEventListener('click', () => {
         chrome.storage.local.set({ "index": index });
-        chrome.storage.local.set({ "remainingTask": remainingTask });
         window.location.href = "timer.html";
     })
 
@@ -166,6 +169,15 @@ const renderTask = (task, index) => {
     taskContainer.appendChild(taskRow);
 }
 
+
+//delete Task
+
+const deleteTask= async(index)=>{
+    tasks.splice(index,1);
+    await chrome.storage.local.set({"tasks":tasks});
+    refreshTasks();
+
+}
 //
 const createPlaylist = document.getElementById('create-playlist');
 createPlaylist.addEventListener('click', () => {

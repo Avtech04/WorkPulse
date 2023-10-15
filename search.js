@@ -1,5 +1,5 @@
-const searchBtn=document.getElementById('search-btn');
-const searchInput=document.getElementById('search');
+const searchBtn = document.getElementById('search-btn');
+const searchInput = document.getElementById('search');
 
 // Replace 'YOUR_API_KEY' with your actual API key.
 const API_KEY = 'AIzaSyBtRXOjmAeybXF6jImnkQ-R3NSFIosRGss';
@@ -12,13 +12,13 @@ function searchYouTubeVideos(query) {
         //part:'contentDetails',
         q: query,
         key: API_KEY
-    }, function(data) {
+    }, function (data) {
         // Handle the API response (data.items contains the video results).
         const videosContainer = $('#videos');
         videosContainer.empty(); // Clear previous results
 
         // Iterate through the video items and display them.
-        data.items.forEach(function(item,index) {
+        data.items.forEach(function (item, index) {
             console.log(item);
             const videoId = item.id.videoId;
             const videoTitle = item.snippet.title;
@@ -32,12 +32,12 @@ function searchYouTubeVideos(query) {
                                 ">${videoTitle}</h3>
                                         <button class="play" id="add-playlist-${index}">Add to PlayList</button>
                                    </div>`;
-            
+
             videosContainer.append(videoElement);
-            const addVideo=document.getElementById(`add-playlist-${index}`);
-            var vidIndex=0;
-            addVideo.addEventListener('click',()=>{
-                var video={
+            const addVideo = document.getElementById(`add-playlist-${index}`);
+            var vidIndex = 0;
+            addVideo.addEventListener('click', () => {
+                var video = {
                     vidIndex,
                     videoId,
                     videoThumbnail,
@@ -47,27 +47,27 @@ function searchYouTubeVideos(query) {
                     if (typeof data.playlist === 'undefined') {
                         data.playlist = [video];
                     } else {
-                        video.vidIndex=data.playlist.length;
+                        video.vidIndex = data.playlist.length;
                         data.playlist.push(video);
                     }
                     chrome.storage.local.set({ "playlist": data.playlist });
                 })
             })
-            
+
         });
     });
 }
 
 
 
-searchBtn.addEventListener('click',()=>{
-    var searchTxt=searchInput.value;
+searchBtn.addEventListener('click', () => {
+    var searchTxt = searchInput.value;
     console.log(searchTxt);
     searchYouTubeVideos(`${searchTxt} videos`);
 })
 
 //back
-const backBtn=document.getElementById('back');
-backBtn.addEventListener('click',()=>{
-    window.location.href="popup.html";
+const backBtn = document.getElementById('back');
+backBtn.addEventListener('click', () => {
+    window.location.href = "popup.html";
 })
