@@ -22,8 +22,9 @@
     "128": "icon.png"
   },
   "background": {
-    "service_worker":"background.js"
-     
+    "service_worker": 
+      "background.js"
+    
   },
   "content_scripts": [
     {

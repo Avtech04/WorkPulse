@@ -38,6 +38,9 @@
             justify-content: center;
             text-align: center;
         }
+        .clear{
+            display: none;
+        }
 
         #search{
             padding: 10px;
@@ -80,6 +83,21 @@
     padding: 7px;
     border-radius: 10px
     }
+
+
+    #alternate{
+        width: 40vw;
+    height: 40vh;
+    color: grey;
+    /* background-color: yellow; */
+    align-items: center;
+    text-align: center;
+    margin: auto;
+ 
+    font-size: 34px;
+    margin-top: 3%;
+    }
+    
     </style>
 </head>
 <body>
@@ -87,6 +105,9 @@
     <div class="search_options">
         <input type="text" name="search" id="search">
         <button id="search-btn">Search</button>
+    </div>
+    <div id="alternate">
+        Search for your interest!
     </div>
     <div class="videos" id="videos"></div>
     <button id="back">Back</button>

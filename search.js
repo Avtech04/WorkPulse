@@ -63,6 +63,8 @@ function searchYouTubeVideos(query) {
 searchBtn.addEventListener('click', () => {
     var searchTxt = searchInput.value;
     console.log(searchTxt);
+    const alternate=document.getElementById('alternate');
+    alternate.classList.add('clear');
     searchYouTubeVideos(`${searchTxt} videos`);
 })
 
